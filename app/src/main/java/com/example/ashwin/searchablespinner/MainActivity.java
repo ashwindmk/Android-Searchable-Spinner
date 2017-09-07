@@ -1,5 +1,6 @@
 package com.example.ashwin.searchablespinner;
 
+import android.app.Fragment;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -73,5 +74,18 @@ public class MainActivity extends AppCompatActivity {
                 Log.d(Constants.DEBUG_LOGGING, TAG + " : Nothing selected");
             }
         });
+    }
+
+    private void dismissSpinner() {
+        Fragment searchableSpinnerDialog = getFragmentManager().findFragmentByTag("TAG");
+        if (searchableSpinnerDialog != null && searchableSpinnerDialog.isAdded()) {
+            getFragmentManager().beginTransaction().remove(searchableSpinnerDialog).commit();
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        dismissSpinner();
+        super.onPause();
     }
 }
